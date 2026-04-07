@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dalthon AWS Cloud Practitioner Ultimate Game</title>
+<style>
+:root {
+  --bg1:#08111f; --bg2:#0f172a; --bg3:#14213d; --panel:rgba(15,23,42,.95);
+  --card:#1f2937; --line:rgba(148,163,184,.18); --text:#f8fafc; --muted:#cbd5e1;
+  --accent:#38bdf8; --good:#22c55e; --bad:#ef4444; --gold:#fbbf24; --violet:#8b5cf6;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; font-family: Arial, Helvetica, sans-serif; color:var(--text);
+  background: linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3)); min-height:100vh;
+}
+.wrap { max-width:1180px; margin:0 auto; padding:24px; }
+.panel {
+  background:var(--panel); border:1px solid var(--line); border-radius:22px; padding:24px;
+  box-shadow:0 22px 60px rgba(0,0,0,.35); margin-bottom:20px;
+}
+h1,h2,h3,p { margin-top:0; }
+.muted { color:var(--muted); }
+.hero { display:grid; grid-template-columns:1.35fr 1fr; gap:18px; }
+.meta, .topbar, .result-grid, .rank-grid, .setup-grid {
+  display:grid; gap:12px;
+}
+.meta { grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); margin-top:18px; }
+.setup-grid { grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); margin:18px 0; }
+.topbar { grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); margin-bottom:16px; }
+.result-grid { grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); margin:18px 0; }
+.rank-grid { grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); margin-top:12px; }
+.item,.stat,.rank-box,.setup-box,.review-item {
+  background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px 16px;
+}
+.label { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.5px; }
+.value { margin-top:6px; font-size:20px; font-weight:700; }
+.big { font-size:34px; font-weight:800; margin-top:8px; }
+.qcard { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:22px; }
+.question { font-size:28px; line-height:1.4; margin:8px 0 0; }
+.qnum { color:var(--accent); font-weight:700; font-size:14px; letter-spacing:.4px; }
+.controls { display:flex; flex-wrap:wrap; gap:12px; margin-top:18px; }
+button {
+  border:none; border-radius:14px; padding:14px 22px; font-size:17px; font-weight:700; cursor:pointer;
+  transition:transform .08s ease, opacity .2s ease;
+}
+button:hover { transform:translateY(-1px); }
+button:disabled { opacity:.6; cursor:not-allowed; transform:none; }
+.primary { background:var(--accent); color:#082032; }
+.secondary { background:#334155; color:#fff; }
+.violet { background:var(--violet); color:#fff; }
+.trueBtn { background:var(--good); color:#fff; min-width:160px; }
+.falseBtn { background:var(--bad); color:#fff; min-width:160px; }
+.feedback {
+  display:none; margin-top:16px; border-radius:14px; padding:16px; line-height:1.55; font-size:16px;
+}
+.feedback.good { display:block; background:rgba(34,197,94,.16); border:1px solid rgba(34,197,94,.45); }
+.feedback.bad { display:block; background:rgba(239,68,68,.16); border:1px solid rgba(239,68,68,.45); }
+.hidden { display:none !important; }
+.footer-note { margin-top:14px; color:var(--muted); font-size:14px; line-height:1.5; }
+.correct { color:#86efac; }
+.incorrect { color:#fca5a5; }
+.kbd {
+  display:inline-block; padding:2px 7px; border-radius:8px; background:#0b1220; border:1px solid var(--line);
+  font-size:12px; color:#e2e8f0;
+}
+.review-item { margin-top:10px; line-height:1.6; }
+select, input[type="radio"] { accent-color: var(--accent); }
+.setup-box label { display:block; margin:8px 0; line-height:1.6; }
+.badge {
+  display:inline-block; padding:6px 10px; border-radius:999px; background:#0b1220; border:1px solid var(--line);
+  font-size:12px; color:#e2e8f0; margin-right:8px; margin-bottom:8px;
+}
+@media (max-width:820px) {
+  .hero { grid-template-columns:1fr; }
+  .question { font-size:23px; }
+  button { width:100%; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="panel" id="startScreen">
+    <div class="hero">
+      <div>
+        <h1>AWS Cloud Practitioner Ultimate Mastery Game</h1>
+        <p class="muted">A personalized study game built for repeated practice, future revision, and stronger exam confidence. This file is fully self-contained, works offline in a browser, saves your best score, and can be kept for years as a normal file on your computer or cloud storage.</p>
+        <div class="meta">
+          <div class="item"><div class="label">Student</div><div class="value">Dalthon Kanyinda Maloji</div></div>
+          <div class="item"><div class="label">Course</div><div class="value">IT 355 Cloud Practitioner</div></div>
+          <div class="item"><div class="label">Instructor</div><div class="value">Jeremy Wonson</div></div>
+          <div class="item"><div class="label">College</div><div class="value">Ensign College</div></div>
+          <div class="item"><div class="label">Aspiring Qualification</div><div class="value">Bachelor's Degree in Applied Information Technology</div></div>
+          <div class="item"><div class="label">Date</div><div class="value">30 March 2026</div></div>
+        </div>
+      </div>
+      <div>
+        <h2>What this version adds</h2>
+        <div>
+          <span class="badge">One combined app</span>
+          <span class="badge">Saved best score</span>
+          <span class="badge">Timed exam mode</span>
+          <span class="badge">Category filters</span>
+          <span class="badge">Randomized rounds</span>
+          <span class="badge">100+ question bank</span>
+        </div>
+        <ul>
+          <li>Choose <strong>Practice Mode</strong> or <strong>Timed Exam Mode</strong>.</li>
+          <li>Pick a round of <strong>20, 50, or 100 questions</strong>.</li>
+          <li>Filter by category or play from all categories.</li>
+          <li>Immediate feedback after every answer.</li>
+          <li>Live counters for <strong>score, correct, and wrong</strong>.</li>
+          <li>Keyboard support: <span class="kbd">T</span>, <span class="kbd">F</span>, <span class="kbd">N</span>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Performance Titles</h3>
+    <div class="rank-grid">
+      <div class="rank-box"><div class="label">50%–69%</div><div class="value">Cadet</div><div class="muted">Developing understanding</div></div>
+      <div class="rank-box"><div class="label">70%–84%</div><div class="value">Professional</div><div class="muted">Strong working knowledge</div></div>
+      <div class="rank-box"><div class="label">85%–94%</div><div class="value">Expert</div><div class="muted">Advanced exam readiness</div></div>
+      <div class="rank-box"><div class="label">95%–100%</div><div class="value" style="color:var(--gold)">Architect</div><div class="muted">Outstanding mastery level</div></div>
+    </div>
+
+    <div class="setup-grid">
+      <div class="setup-box">
+        <div class="label">Mode</div>
+        <label><input type="radio" name="mode" value="practice" checked> Practice Mode</label>
+        <label><input type="radio" name="mode" value="timed"> Timed Exam Mode</label>
+      </div>
+      <div class="setup-box">
+        <div class="label">Round Size</div>
+        <label><input type="radio" name="roundSize" value="20" checked> 20 questions</label>
+        <label><input type="radio" name="roundSize" value="50"> 50 questions</label>
+        <label><input type="radio" name="roundSize" value="100"> 100 questions</label>
+      </div>
+      <div class="setup-box">
+        <div class="label">Category</div>
+        <label><input type="radio" name="category" value="All" checked> All categories</label>
+        <label><input type="radio" name="category" value="Security"> Security</label>
+        <label><input type="radio" name="category" value="Networking"> Networking</label>
+        <label><input type="radio" name="category" value="Storage"> Storage</label>
+        <label><input type="radio" name="category" value="Billing"> Billing</label>
+        <label><input type="radio" name="category" value="Cloud Concepts"> Cloud Concepts</label>
+      </div>
+      <div class="setup-box">
+        <div class="label">Saved Data</div>
+        <div class="value" id="bestScoreStart">0/20</div>
+        <div class="muted" id="bestPctStart">0%</div>
+        <div class="muted" style="margin-top:8px;">Question bank: 120 questions</div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="primary" id="startBtn">Start Game</button>
+      <button class="violet" id="examBtn">Quick Exam Simulation</button>
+      <button class="secondary" id="resetBestBtn">Reset Saved Best Score</button>
+    </div>
+    <p class="footer-note">Best way to save this game for the future: download the <strong>.html</strong> file and keep it in Documents, OneDrive, Google Drive, or on a USB. Double-click it later to open it in Chrome or Edge.</p>
+  </div>
+
+  <div class="panel hidden" id="gameScreen">
+    <div class="topbar">
+      <div class="stat"><div class="label">Question</div><div class="value" id="qCounter">1/20</div></div>
+      <div class="stat"><div class="label">Score</div><div class="value" id="score">0</div></div>
+      <div class="stat"><div class="label">Correct</div><div class="value" id="correctCount">0</div></div>
+      <div class="stat"><div class="label">Wrong</div><div class="value" id="wrongCount">0</div></div>
+      <div class="stat"><div class="label">Mode</div><div class="value" id="modeView">Practice</div></div>
+      <div class="stat"><div class="label">Time Left</div><div class="value" id="timerView">--:--</div></div>
+      <div class="stat"><div class="label">Best</div><div class="value" id="bestScoreGame">0/20</div></div>
+    </div>
+
+    <div class="qcard">
+      <div class="qnum" id="qNumText">QUESTION 1</div>
+      <div class="label" id="categoryText">Category</div>
+      <p class="question" id="questionText"></p>
+      <div class="controls">
+        <button class="trueBtn" id="trueBtn">True</button>
+        <button class="falseBtn" id="falseBtn">False</button>
+        <button class="secondary hidden" id="nextBtn">Next</button>
+        <button class="secondary" id="quitBtn">Quit Round</button>
+      </div>
+      <div class="feedback" id="feedback"></div>
+      <p class="footer-note">Keyboard: <span class="kbd">T</span> = True, <span class="kbd">F</span> = False, <span class="kbd">N</span> = Next.</p>
+    </div>
+  </div>
+
+  <div class="panel hidden" id="resultScreen">
+    <h2>Round Results</h2>
+    <p class="muted">Review your performance and play again with another category, mode, or round size.</p>
+    <div class="result-grid">
+      <div class="stat"><div class="label">Final Score</div><div class="big" id="finalScore">0/20</div></div>
+      <div class="stat"><div class="label">Percentage</div><div class="big" id="finalPct">0%</div></div>
+      <div class="stat"><div class="label">Correct</div><div class="big" id="finalCorrect">0</div></div>
+      <div class="stat"><div class="label">Wrong</div><div class="big" id="finalWrong">0</div></div>
+      <div class="stat"><div class="label">Title Earned</div><div class="big" id="rankText">Cadet</div></div>
+      <div class="stat"><div class="label">Best Saved Score</div><div class="big" id="bestScoreEnd">0/20</div></div>
+    </div>
+    <h3>Review</h3>
+    <div id="reviewList"></div>
+    <div class="controls">
+      <button class="primary" id="playAgainBtn">Play Again</button>
+      <button class="secondary" id="homeBtn">Back to Home</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const bank = [
+{category:"Compute", statement:"Amazon EC2 provides resizable virtual servers in the cloud.", answer:true, explanation:"Amazon EC2 lets you launch and manage virtual machines in AWS."},
+{category:"Storage", statement:"Amazon S3 stores data as objects inside buckets.", answer:true, explanation:"S3 is object storage, and buckets hold objects."},
+{category:"Database", statement:"Amazon RDS is a fully managed relational database service.", answer:true, explanation:"Amazon RDS manages setup, patching, backups, and other database tasks."},
+{category:"Serverless", statement:"AWS Lambda requires you to manage operating systems and patch servers.", answer:false, explanation:"AWS Lambda is serverless, so AWS manages the underlying infrastructure."},
+{category:"Networking", statement:"Amazon Route 53 is used for DNS and domain routing.", answer:true, explanation:"Route 53 helps route users to applications using DNS."},
+{category:"Networking", statement:"Amazon VPC allows you to create an isolated network in AWS.", answer:true, explanation:"A VPC is your private network space in AWS."},
+{category:"Networking", statement:"Elastic Load Balancing distributes incoming traffic across multiple targets.", answer:true, explanation:"ELB improves availability and scalability."},
+{category:"Management", statement:"AWS CloudFormation is used to define infrastructure as code.", answer:true, explanation:"CloudFormation uses templates to create and manage resources."},
+{category:"Management", statement:"AWS Organizations helps centrally manage multiple AWS accounts.", answer:true, explanation:"AWS Organizations supports account management and governance."},
+{category:"Database", statement:"Amazon DynamoDB is a managed NoSQL database service.", answer:true, explanation:"DynamoDB is AWS's managed key-value and document database."},
+{category:"Networking", statement:"Amazon CloudFront is a content delivery network service.", answer:true, explanation:"CloudFront uses edge locations to deliver content with low latency."},
+{category:"Storage", statement:"Amazon EBS provides block storage for EC2 instances.", answer:true, explanation:"EBS volumes are block storage devices that attach to EC2 instances."},
+{category:"Storage", statement:"Amazon S3 Glacier is designed for long-term archival storage.", answer:true, explanation:"S3 Glacier is low-cost storage for archives and backups."},
+{category:"Billing", statement:"AWS Cost Explorer helps analyze AWS spending and usage.", answer:true, explanation:"Cost Explorer gives visibility into cost trends and usage."},
+{category:"Billing", statement:"AWS Trusted Advisor only checks security issues.", answer:false, explanation:"Trusted Advisor also checks cost, performance, fault tolerance, and service limits."},
+{category:"Security", statement:"AWS Config records resource configurations and changes over time.", answer:true, explanation:"AWS Config helps track configurations and compliance."},
+{category:"Security", statement:"AWS CloudTrail records API activity and account actions.", answer:true, explanation:"CloudTrail captures user and service activity for auditing."},
+{category:"Security", statement:"Amazon GuardDuty helps detect suspicious activity and threats.", answer:true, explanation:"GuardDuty analyzes logs and events for threats."},
+{category:"Security", statement:"Amazon Inspector helps identify vulnerabilities in workloads.", answer:true, explanation:"Inspector scans workloads for software vulnerabilities and exposures."},
+{category:"Security", statement:"AWS WAF helps protect web applications from common web exploits.", answer:true, explanation:"AWS WAF filters web traffic to block harmful requests."},
+{category:"Security", statement:"AWS Shield Standard provides protection against common DDoS attacks.", answer:true, explanation:"Shield Standard is included for AWS customers."},
+{category:"Compliance", statement:"AWS Artifact provides access to compliance reports and agreements.", answer:true, explanation:"AWS Artifact is the on-demand portal for compliance documents."},
+{category:"Security", statement:"Amazon Cognito can help with user sign-up and sign-in for applications.", answer:true, explanation:"Cognito supports identity management for apps."},
+{category:"Security", statement:"IAM roles provide temporary credentials to AWS resources.", answer:true, explanation:"IAM roles are used for temporary, limited access."},
+{category:"Security", statement:"The AWS root user should be used for daily routine tasks.", answer:false, explanation:"The root user should be protected and rarely used."},
+{category:"Security", statement:"Multi-Factor Authentication adds extra protection beyond a password.", answer:true, explanation:"MFA requires another factor in addition to the password."},
+{category:"Security", statement:"Least privilege means giving users only the access they need.", answer:true, explanation:"Least privilege reduces risk by limiting permissions."},
+{category:"Billing", statement:"AWS Pricing Calculator helps estimate AWS costs before deployment.", answer:true, explanation:"It helps plan expected charges before building."},
+{category:"Security", statement:"A Security Group acts as a virtual firewall for resources.", answer:true, explanation:"Security Groups control inbound and outbound traffic."},
+{category:"Networking", statement:"Network ACLs operate at the subnet level.", answer:true, explanation:"Network ACLs are stateless controls applied to subnets."},
+{category:"Database", statement:"Amazon RDS is best described as object storage.", answer:false, explanation:"Amazon RDS is a relational database service, not object storage."},
+{category:"Serverless", statement:"AWS Lambda can run code without provisioning servers.", answer:true, explanation:"That is a core serverless feature of Lambda."},
+{category:"Compute", statement:"Amazon EC2 Auto Scaling adjusts capacity based on demand.", answer:true, explanation:"Auto Scaling can add or remove instances automatically."},
+{category:"Networking", statement:"Amazon Route 53 can perform health checks.", answer:true, explanation:"Route 53 can monitor endpoints and route traffic accordingly."},
+{category:"Containers", statement:"AWS Fargate lets you run containers without managing servers.", answer:true, explanation:"Fargate is a serverless compute engine for containers."},
+{category:"Containers", statement:"Amazon ECS is an AWS container orchestration service.", answer:true, explanation:"ECS helps run and manage containers on AWS."},
+{category:"Containers", statement:"Amazon EKS is a managed Kubernetes service.", answer:true, explanation:"EKS makes it easier to run Kubernetes on AWS."},
+{category:"Billing", statement:"AWS Budgets can alert you when costs exceed your thresholds.", answer:true, explanation:"AWS Budgets can notify you about actual or forecasted costs."},
+{category:"Billing", statement:"Savings Plans can reduce cost in exchange for usage commitment.", answer:true, explanation:"Savings Plans offer discounted pricing for committed usage."},
+{category:"Billing", statement:"Spot Instances can cost less than On-Demand Instances.", answer:true, explanation:"Spot Instances use spare AWS capacity at discounted prices."},
+{category:"Billing", statement:"On-Demand pricing requires a long-term contract.", answer:false, explanation:"On-Demand pricing has no long-term commitment."},
+{category:"Billing", statement:"Reserved Instances are one AWS option for lowering long-term compute costs.", answer:true, explanation:"Reserved Instances can lower cost compared with On-Demand pricing."},
+{category:"Support", statement:"All AWS Support plans include a Technical Account Manager.", answer:false, explanation:"A TAM is associated with higher-tier enterprise support offerings."},
+{category:"Security", statement:"The AWS Shared Responsibility Model means AWS handles all customer security tasks.", answer:false, explanation:"Customers are still responsible for security in the cloud."},
+{category:"Security", statement:"Customers are responsible for managing their IAM users and permissions.", answer:true, explanation:"Identity and access settings are customer responsibilities."},
+{category:"Security", statement:"AWS is responsible for the physical security of its data centers.", answer:true, explanation:"AWS handles security of the physical infrastructure."},
+{category:"Security", statement:"Encryption at rest protects stored data.", answer:true, explanation:"Data at rest means data stored on disk or in storage."},
+{category:"Security", statement:"Encryption in transit protects data moving across networks.", answer:true, explanation:"TLS/HTTPS are examples of protecting data in transit."},
+{category:"Storage", statement:"Amazon S3 versioning can help recover from accidental deletions.", answer:true, explanation:"Versioning keeps multiple versions of objects."},
+{category:"Management", statement:"Amazon CloudWatch can monitor metrics and trigger alarms.", answer:true, explanation:"CloudWatch tracks metrics, logs, and alarms."},
+{category:"Management", statement:"AWS Systems Manager can help with patch management.", answer:true, explanation:"Systems Manager helps automate operational tasks like patching."},
+{category:"Security", statement:"AWS Secrets Manager helps store and rotate secrets.", answer:true, explanation:"It is used for secrets such as passwords and API keys."},
+{category:"Security", statement:"AWS KMS is used to create and manage encryption keys.", answer:true, explanation:"KMS centralizes key management."},
+{category:"Security", statement:"Amazon Macie helps discover and protect sensitive data in S3.", answer:true, explanation:"Macie can identify sensitive data such as personal information."},
+{category:"Analytics", statement:"Amazon Redshift is a data warehousing service.", answer:true, explanation:"Redshift is used for analytics and data warehousing."},
+{category:"Analytics", statement:"Amazon Athena allows querying data in S3 using SQL.", answer:true, explanation:"Athena is a serverless query service."},
+{category:"Analytics", statement:"AWS Glue is mainly used for data integration and ETL.", answer:true, explanation:"Glue helps prepare and move data."},
+{category:"Analytics", statement:"Amazon QuickSight is a business intelligence service.", answer:true, explanation:"QuickSight creates dashboards and visual analytics."},
+{category:"Application Integration", statement:"Amazon SNS is used for pub/sub messaging and notifications.", answer:true, explanation:"SNS sends messages to subscribers or endpoints."},
+{category:"Application Integration", statement:"Amazon SQS is used to decouple application components with queues.", answer:true, explanation:"SQS provides managed message queues."},
+{category:"Application Integration", statement:"AWS Step Functions help coordinate workflows between services.", answer:true, explanation:"Step Functions orchestrate multiple steps in a workflow."},
+{category:"Networking", statement:"AWS Direct Connect provides a dedicated network connection to AWS.", answer:true, explanation:"Direct Connect is a dedicated connection rather than general internet access."},
+{category:"Networking", statement:"AWS VPN uses encrypted tunnels for secure network communication.", answer:true, explanation:"VPN connections protect traffic over networks."},
+{category:"Global Infrastructure", statement:"An Availability Zone is the same thing as a Region.", answer:false, explanation:"A Region contains multiple Availability Zones."},
+{category:"Global Infrastructure", statement:"Deploying resources across multiple Availability Zones can improve resilience.", answer:true, explanation:"Multi-AZ design helps with fault tolerance."},
+{category:"Global Infrastructure", statement:"A Region is a geographic area containing multiple Availability Zones.", answer:true, explanation:"Regions are separated geographic areas."},
+{category:"Global Infrastructure", statement:"Edge locations are used by services such as CloudFront.", answer:true, explanation:"Edge locations help deliver content closer to users."},
+{category:"Storage", statement:"Amazon S3 can host static websites.", answer:true, explanation:"S3 can host static web content."},
+{category:"Security", statement:"AWS IAM Identity Center supports single sign-on access.", answer:true, explanation:"IAM Identity Center helps users access multiple accounts and applications."},
+{category:"Security", statement:"An IAM policy defines permissions for AWS actions and resources.", answer:true, explanation:"Policies control what actions are allowed or denied."},
+{category:"Management", statement:"AWS Service Control Policies are used with AWS Organizations.", answer:true, explanation:"SCPs set permission guardrails across accounts."},
+{category:"Cloud Concepts", statement:"Amazon EC2 is a Platform as a Service offering.", answer:false, explanation:"Amazon EC2 is Infrastructure as a Service."},
+{category:"Cloud Concepts", statement:"Software as a Service usually delivers software through a browser.", answer:true, explanation:"SaaS applications are typically accessed online."},
+{category:"Cloud Concepts", statement:"Platform as a Service helps developers focus on applications more than infrastructure.", answer:true, explanation:"PaaS reduces the need to manage lower-level infrastructure."},
+{category:"Cloud Concepts", statement:"IaaS gives the customer more control over virtual machines and networking.", answer:true, explanation:"IaaS provides lower-level infrastructure control."},
+{category:"Cloud Concepts", statement:"Elasticity means resources can automatically grow or shrink with demand.", answer:true, explanation:"Elasticity is a core cloud benefit."},
+{category:"Cloud Concepts", statement:"Agility in the cloud means faster provisioning and experimentation.", answer:true, explanation:"Cloud services can be provisioned quickly."},
+{category:"Cloud Concepts", statement:"Pay-as-you-go pricing means paying only for what you use.", answer:true, explanation:"This is one of the main cloud value propositions."},
+{category:"Cloud Concepts", statement:"The AWS Well-Architected Framework includes security as one of its pillars.", answer:true, explanation:"Security is a major pillar in the framework."},
+{category:"Cloud Concepts", statement:"Fault tolerance means a system can continue operating when part of it fails.", answer:true, explanation:"Fault-tolerant systems keep working despite failures."},
+{category:"Cloud Concepts", statement:"High availability focuses on keeping services accessible and running.", answer:true, explanation:"High availability reduces downtime."},
+{category:"Cloud Concepts", statement:"Scalability means a system can handle growth in workload.", answer:true, explanation:"Scalability can be vertical or horizontal."},
+{category:"Cloud Concepts", statement:"Vertical scaling means adding more power to an existing machine.", answer:true, explanation:"This could mean more CPU, memory, or storage."},
+{category:"Cloud Concepts", statement:"Horizontal scaling means adding more instances or servers.", answer:true, explanation:"This spreads load across multiple resources."},
+{category:"Database", statement:"Amazon Aurora is related to managed relational databases.", answer:true, explanation:"Aurora is a managed relational database engine."},
+{category:"Database", statement:"Amazon RDS automatically makes every database globally distributed by default.", answer:false, explanation:"Global distribution requires specific design choices and services."},
+{category:"Migration", statement:"AWS Snowball can help transfer large amounts of data to AWS.", answer:true, explanation:"Snowball devices are used for data migration."},
+{category:"Migration", statement:"AWS Database Migration Service can help migrate databases to AWS.", answer:true, explanation:"DMS supports moving databases with minimal downtime."},
+{category:"Migration", statement:"AWS DataSync helps move data between on-premises storage and AWS.", answer:true, explanation:"DataSync automates and accelerates data transfer."},
+{category:"AI/ML", statement:"Amazon Polly converts text to speech.", answer:true, explanation:"Polly is a text-to-speech AI service."},
+{category:"AI/ML", statement:"Amazon Rekognition can analyze images and video.", answer:true, explanation:"Rekognition supports image and video analysis."},
+{category:"AI/ML", statement:"Amazon Comprehend helps analyze text using natural language processing.", answer:true, explanation:"Comprehend extracts insights from text."},
+{category:"AI/ML", statement:"Amazon Lex helps build conversational chatbots.", answer:true, explanation:"Lex supports conversational interfaces."},
+{category:"AI/ML", statement:"Amazon Bedrock is related to building generative AI applications.", answer:true, explanation:"Bedrock provides access to foundation models and generative AI capabilities."},
+{category:"Support", statement:"AWS Health Dashboard gives information about AWS service events and account issues.", answer:true, explanation:"AWS Health provides status and event information."},
+{category:"Management", statement:"The AWS Management Console is a web-based interface for managing AWS services.", answer:true, explanation:"Many users start with the web console."},
+{category:"Management", statement:"The AWS CLI is used to manage AWS services from the command line.", answer:true, explanation:"The CLI supports scripted and terminal-based management."},
+{category:"Storage", statement:"An EC2 instance store is persistent even after the instance is terminated.", answer:false, explanation:"Instance store is ephemeral storage."},
+{category:"Storage", statement:"Amazon EFS provides scalable file storage.", answer:true, explanation:"EFS is a managed elastic file system."},
+{category:"Storage", statement:"Amazon FSx provides managed file systems for specific workloads.", answer:true, explanation:"FSx offers managed file storage options for various use cases."},
+{category:"Management", statement:"Tagging resources can help with organization and cost tracking.", answer:true, explanation:"Tags are useful for ownership, automation, and billing insights."},
+{category:"Marketplace", statement:"AWS Marketplace allows customers to find and buy third-party software.", answer:true, explanation:"Marketplace offers software and services from vendors."},
+{category:"Compute", statement:"A launch template can be used with Auto Scaling for EC2 deployments.", answer:true, explanation:"Launch templates define EC2 launch settings."},
+{category:"Application Integration", statement:"Amazon API Gateway helps create and manage APIs.", answer:true, explanation:"API Gateway is a managed service for publishing APIs."},
+{category:"Compute", statement:"Amazon Lightsail is aimed at simple virtual private server workloads.", answer:true, explanation:"Lightsail is a simplified service for websites, small applications, and simple workloads."},
+{category:"Networking", statement:"Private subnets in a VPC are typically used for resources that should not be directly reachable from the internet.", answer:true, explanation:"Private subnets often host internal resources like databases or application backends."},
+{category:"Security", statement:"AWS Shield Advanced is the same free service tier provided automatically to all customers.", answer:false, explanation:"The free default is Shield Standard; Shield Advanced is a paid service with extra protections."},
+{category:"Compliance", statement:"PCI DSS is a compliance standard related to payment card data.", answer:true, explanation:"PCI DSS focuses on protecting payment card information."},
+{category:"Billing", statement:"Consolidated billing is available through AWS Organizations.", answer:true, explanation:"AWS Organizations can combine billing across multiple accounts."},
+{category:"Management", statement:"CloudWatch Logs can collect and monitor log data.", answer:true, explanation:"CloudWatch Logs stores and helps monitor application and system logs."},
+{category:"Storage", statement:"S3 storage classes can help optimize cost based on data access patterns.", answer:true, explanation:"Different storage classes support different cost and retrieval needs."},
+{category:"Migration", statement:"The AWS Application Migration Service helps migrate applications to AWS.", answer:true, explanation:"It helps lift and shift servers and applications into AWS."},
+{category:"Containers", statement:"Amazon ECS can run tasks on EC2 or on AWS Fargate.", answer:true, explanation:"ECS supports both EC2-backed and Fargate-backed deployments."},
+{category:"Support", statement:"The Basic Support plan includes 24/7 technical support by phone.", answer:false, explanation:"Higher support tiers provide broader direct technical support options."},
+{category:"Cloud Concepts", statement:"A benefit of cloud computing is trading capital expense for variable expense.", answer:true, explanation:"Cloud lets customers avoid large upfront hardware purchases."},
+{category:"Global Infrastructure", statement:"Choosing a Region can affect latency and compliance needs.", answer:true, explanation:"Region selection matters for performance, residency, and regulations."},
+{category:"Security", statement:"AWS Identity and Access Management is mainly used for database storage.", answer:false, explanation:"IAM is for identity, authentication, and authorization."},
+{category:"Analytics", statement:"Redshift Serverless removes the need to manage data warehouse infrastructure.", answer:true, explanation:"Serverless options reduce infrastructure management for analytics."},
+{category:"AI/ML", statement:"Amazon Transcribe converts speech into text.", answer:true, explanation:"Transcribe is a speech-to-text service."},
+{category:"Networking", statement:"A NAT gateway can help instances in a private subnet reach the internet for outbound traffic.", answer:true, explanation:"NAT gateways support outbound internet access from private subnets."}
+];
+
+const els = {
+  startScreen: document.getElementById('startScreen'),
+  gameScreen: document.getElementById('gameScreen'),
+  resultScreen: document.getElementById('resultScreen'),
+  startBtn: document.getElementById('startBtn'),
+  examBtn: document.getElementById('examBtn'),
+  resetBestBtn: document.getElementById('resetBestBtn'),
+  qCounter: document.getElementById('qCounter'),
+  score: document.getElementById('score'),
+  correctCount: document.getElementById('correctCount'),
+  wrongCount: document.getElementById('wrongCount'),
+  modeView: document.getElementById('modeView'),
+  timerView: document.getElementById('timerView'),
+  bestScoreStart: document.getElementById('bestScoreStart'),
+  bestPctStart: document.getElementById('bestPctStart'),
+  bestScoreGame: document.getElementById('bestScoreGame'),
+  bestScoreEnd: document.getElementById('bestScoreEnd'),
+  qNumText: document.getElementById('qNumText'),
+  categoryText: document.getElementById('categoryText'),
+  questionText: document.getElementById('questionText'),
+  trueBtn: document.getElementById('trueBtn'),
+  falseBtn: document.getElementById('falseBtn'),
+  nextBtn: document.getElementById('nextBtn'),
+  quitBtn: document.getElementById('quitBtn'),
+  feedback: document.getElementById('feedback'),
+  finalScore: document.getElementById('finalScore'),
+  finalPct: document.getElementById('finalPct'),
+  finalCorrect: document.getElementById('finalCorrect'),
+  finalWrong: document.getElementById('finalWrong'),
+  rankText: document.getElementById('rankText'),
+  reviewList: document.getElementById('reviewList'),
+  playAgainBtn: document.getElementById('playAgainBtn'),
+  homeBtn: document.getElementById('homeBtn'),
+};
+
+let state = {
+  index:0, score:0, correct:0, wrong:0, answered:false, review:[], total:20,
+  mode:'practice', category:'All', timeLeft:0, timer:null
+};
+let roundQuestions = [];
+
+function shuffle(arr) {
+  const copy = [...arr];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+function selected(name) {
+  const el = document.querySelector(`input[name="${name}"]:checked`);
+  return el ? el.value : null;
+}
+
+function getBest() {
+  const raw = localStorage.getItem('aws_ultimate_best_score');
+  return raw ? JSON.parse(raw) : {score:0, total:20, pct:0, title:'Cadet'};
+}
+
+function getTitle(pct) {
+  if (pct >= 95) return 'Architect';
+  if (pct >= 85) return 'Expert';
+  if (pct >= 70) return 'Professional';
+  return 'Cadet';
+}
+
+function setBest(score, total) {
+  const pct = Math.round((score / total) * 100);
+  const title = getTitle(pct);
+  const current = getBest();
+  if (score > current.score || (score === current.score && pct > current.pct)) {
+    localStorage.setItem('aws_ultimate_best_score', JSON.stringify({score,total,pct,title}));
+  }
+  updateBestViews();
+}
+
+function updateBestViews() {
+  const best = getBest();
+  els.bestScoreStart.textContent = `${best.score}/${best.total}`;
+  els.bestPctStart.textContent = `${best.pct}% • ${best.title}`;
+  els.bestScoreGame.textContent = `${best.score}/${best.total}`;
+  els.bestScoreEnd.textContent = `${best.score}/${best.total}`;
+}
+
+function showScreen(name) {
+  els.startScreen.classList.add('hidden');
+  els.gameScreen.classList.add('hidden');
+  els.resultScreen.classList.add('hidden');
+  els[name].classList.remove('hidden');
+}
+
+function filteredBank(category) {
+  if (category === 'All') return bank;
+  return bank.filter(q => q.category === category);
+}
+
+function formatTime(seconds) {
+  const m = Math.floor(seconds / 60).toString().padStart(2,'0');
+  const s = Math.floor(seconds % 60).toString().padStart(2,'0');
+  return `${m}:${s}`;
+}
+
+function clearTimer() {
+  if (state.timer) {
+    clearInterval(state.timer);
+    state.timer = null;
+  }
+}
+
+function beginTimer() {
+  clearTimer();
+  if (state.mode !== 'timed') {
+    els.timerView.textContent = '--:--';
+    return;
+  }
+  // 45 sec per question
+  state.timeLeft = state.total * 45;
+  els.timerView.textContent = formatTime(state.timeLeft);
+  state.timer = setInterval(() => {
+    state.timeLeft -= 1;
+    els.timerView.textContent = formatTime(Math.max(0, state.timeLeft));
+    if (state.timeLeft <= 0) {
+      clearTimer();
+      finishGame(true);
+    }
+  }, 1000);
+}
+
+function startGame(forceExam=false) {
+  const mode = forceExam ? 'timed' : selected('mode');
+  const total = forceExam ? 20 : Number(selected('roundSize'));
+  const category = selected('category');
+
+  const pool = shuffle(filteredBank(category));
+  const chosen = pool.length >= total ? pool.slice(0, total) : shuffle(bank).slice(0, total);
+
+  roundQuestions = chosen;
+  state = {
+    index:0, score:0, correct:0, wrong:0, answered:false, review:[],
+    total, mode, category, timeLeft:0, timer:null
+  };
+  updateBestViews();
+  els.modeView.textContent = mode === 'timed' ? 'Timed Exam' : 'Practice';
+  showScreen('gameScreen');
+  renderQuestion();
+  beginTimer();
+}
+
+function renderQuestion() {
+  const q = roundQuestions[state.index];
+  els.qCounter.textContent = `${state.index + 1}/${state.total}`;
+  els.score.textContent = state.score;
+  els.correctCount.textContent = state.correct;
+  els.wrongCount.textContent = state.wrong;
+  els.qNumText.textContent = `QUESTION ${state.index + 1}`;
+  els.categoryText.textContent = q.category;
+  els.questionText.textContent = q.statement;
+  els.feedback.className = 'feedback';
+  els.feedback.innerHTML = '';
+  els.trueBtn.disabled = false;
+  els.falseBtn.disabled = false;
+  els.nextBtn.classList.add('hidden');
+  state.answered = false;
+}
+
+function answerQuestion(choice) {
+  if (state.answered) return;
+  state.answered = true;
+  const q = roundQuestions[state.index];
+  const isCorrect = choice === q.answer;
+
+  if (isCorrect) {
+    state.score += 1;
+    state.correct += 1;
+    els.feedback.className = 'feedback good';
+    els.feedback.innerHTML = `<strong>Correct.</strong> ${q.explanation}`;
+  } else {
+    state.wrong += 1;
+    els.feedback.className = 'feedback bad';
+    els.feedback.innerHTML = `<strong>Incorrect.</strong> The correct answer is <strong>${q.answer ? 'True' : 'False'}</strong>. ${q.explanation}`;
+  }
+
+  state.review.push({
+    category:q.category,
+    statement:q.statement,
+    yourAnswer:choice,
+    correctAnswer:q.answer,
+    explanation:q.explanation,
+    isCorrect
+  });
+
+  els.score.textContent = state.score;
+  els.correctCount.textContent = state.correct;
+  els.wrongCount.textContent = state.wrong;
+  els.trueBtn.disabled = true;
+  els.falseBtn.disabled = true;
+  els.nextBtn.classList.remove('hidden');
+  els.nextBtn.textContent = state.index === state.total - 1 ? 'Finish' : 'Next';
+}
+
+function nextQuestion() {
+  if (!state.answered) return;
+  if (state.index < state.total - 1) {
+    state.index += 1;
+    renderQuestion();
+  } else {
+    finishGame(false);
+  }
+}
+
+function finishGame(timeout=false) {
+  clearTimer();
+  const pct = Math.round((state.score / state.total) * 100);
+  const title = getTitle(pct);
+  setBest(state.score, state.total);
+
+  els.finalScore.textContent = `${state.score}/${state.total}`;
+  els.finalPct.textContent = timeout ? `${pct}% (Time ended)` : `${pct}%`;
+  els.finalCorrect.textContent = state.correct;
+  els.finalWrong.textContent = state.wrong;
+  els.rankText.textContent = title;
+  els.reviewList.innerHTML = state.review.map((item, i) => `
+    <div class="review-item">
+      <strong>Q${i + 1}.</strong> [${item.category}] ${item.statement}<br>
+      <span class="${item.isCorrect ? 'correct' : 'incorrect'}">
+        Your answer: ${item.yourAnswer ? 'True' : 'False'} | Correct answer: ${item.correctAnswer ? 'True' : 'False'}
+      </span><br>
+      <span class="muted">${item.explanation}</span>
+    </div>
+  `).join('');
+  updateBestViews();
+  showScreen('resultScreen');
+}
+
+els.startBtn.addEventListener('click', () => startGame(false));
+els.examBtn.addEventListener('click', () => startGame(true));
+els.trueBtn.addEventListener('click', () => answerQuestion(true));
+els.falseBtn.addEventListener('click', () => answerQuestion(false));
+els.nextBtn.addEventListener('click', nextQuestion);
+els.playAgainBtn.addEventListener('click', () => startGame(false));
+els.homeBtn.addEventListener('click', () => { clearTimer(); updateBestViews(); showScreen('startScreen'); });
+els.quitBtn.addEventListener('click', () => { clearTimer(); updateBestViews(); showScreen('startScreen'); });
+els.resetBestBtn.addEventListener('click', () => {
+  localStorage.removeItem('aws_ultimate_best_score');
+  updateBestViews();
+  alert('Saved best score has been reset.');
+});
+
+document.addEventListener('keydown', (e) => {
+  const visible = !els.gameScreen.classList.contains('hidden');
+  if (!visible) return;
+  const key = e.key.toLowerCase();
+  if (key === 't' && !state.answered) answerQuestion(true);
+  if (key === 'f' && !state.answered) answerQuestion(false);
+  if (key === 'n' && state.answered) nextQuestion();
+});
+
+updateBestViews();
+</script>
+</body>
+</html>
